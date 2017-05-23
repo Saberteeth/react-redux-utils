@@ -1,0 +1,22 @@
+
+#home-view > .left-content{
+  border:1px solid black;
+  float: left;
+  width: 70%;
+  padding:2.5%;
+  min-width: 600px;
+}
+#home-view > .right-content{
+  border:1px solid black;
+  float: right;
+  width: 20%;
+  padding:2%;
+}
+
+@media screen and (max-width:1000px){
+  #home-view > .right-content { display:none; }
+  #home-view > .left-content{
+    width: 95%;
+    padding:2.5%;
+  }
+}
