@@ -9,7 +9,7 @@ function Demo(props) {
   let msg = "";
 
   if (phone && !(/^1[34578]\d{9}$/.test(phone))) {
-    msg = "错误的电话号码。"
+    msg = "Failing number in China."
   }
 
   return (
