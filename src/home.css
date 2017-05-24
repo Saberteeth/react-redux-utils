@@ -14,12 +14,23 @@ a{
   border:1px solid black;
   float: right;
   width: 20%;
+ 
 }
+
+#home-view > .right-content >ul > li{
+  font-size: 14px;
+}
+#home-view > .right-content >ul > li:hover{
+  background: lightblue;
+  transition: all .4s;
+}
+
 
 #home-view > .right-content > h1{
   background:rgba(31,51,111,.8);
   color: white;
   padding-left: 10px;
+  
 }
 
 
@@ -33,6 +44,12 @@ a{
     height: 40px;
     box-shadow: 0 1px 6px rgba(0,0,0,.6);
     border: none;
+  }
+
+  #home-view > .right-content >ul > li:hover{
+    background: none;
+    font-size: 18px;
+    transition: all .4s;
   }
 
   #home-view > .right-content > h1 {
@@ -62,24 +79,23 @@ a{
   }
 }
 
-
 #vcons > ul > li{
   list-style: none;
   float: left;
   border: 1px solid lightblue;
+  fill: lightblue;
   padding:20px;
   margin:10px;
+  transition: all .2s;
 }
+
 #vcons > ul > li:hover{
   box-shadow: 0 0 18px rgba(129, 199, 132, 0.4);
   border-color: rgba(129, 199, 132, 0.6);
+  fill: lightgreen;
 }
 
 #vcons > ul > li svg {
   width:40px;
   height: 40px;
-  fill: lightblue;
-}
-#vcons > ul > li svg:hover{
-  fill: lightgreen;
 }
