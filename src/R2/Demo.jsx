@@ -9,7 +9,8 @@ function Demo(props) {
     .getState()
     .phone;
   const msg = props.getState().msg;
-
+  const tableStyle = {border:"5px solid darkblue",padding:"20px",width:"300px",borderRadius:"10px"};
+  const divStyle = {border:"1px solid darkblue",padding:"6px",borderRadius:"6px",float:'left',marginRight:"10px"}
   return (
     <div>
       Phone:
@@ -21,6 +22,24 @@ function Demo(props) {
       }}
         type="tel"
         placeholder="Tell me your phone number, please."/>
+        <div style={divStyle}>
+          <table style={tableStyle}>
+            <tr>
+              <td style={{width:"24%",textAlign:"right"}}>
+                Name:
+              </td>
+              <td>
+                Demmo
+              </td>
+            </tr>
+            <tr>
+              <td style={{textAlign:"right"}}>Phone:</td>
+              <td>
+                {phone}
+              </td>
+            </tr>
+          </table>
+        </div>
       <div style={{color:'red'}}>
         {msg}
       </div>
