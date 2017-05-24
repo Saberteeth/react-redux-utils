@@ -17,8 +17,7 @@ function inputChange(e) {
   }
 
   return (dispatch) => {
-    if (data.phone) {
-      timeVerify(1500, () => {
+    timeVerify(1500, () => {
         if (value && !(/^1[34578]\d{9}$/.test(value))) {
           const data = {
             msg: "Failing number in China."
@@ -28,8 +27,7 @@ function inputChange(e) {
             active: actionType.INPUTCHANGE
           }, data));
         }
-      })
-    }
+    })
     dispatch(createAction({
       who: actionType.TYPE,
       active: actionType.INPUTCHANGE
