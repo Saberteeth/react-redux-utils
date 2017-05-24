@@ -1,4 +1,4 @@
-import { createAction } from '../utils/R2Factory';
+import { createAction } from './R2Factory';
 export const actionType = {
   TYPE:'R2_DEMO',
   INPUTCHANGE:'INPUTCHANGE'

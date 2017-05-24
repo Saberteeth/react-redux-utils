@@ -17,7 +17,7 @@ module.exports = {
     module:{
         loaders:[
             {
-                test: /\.isvg$/,
+                test: /\.svg$/,
                 loaders: ['raw-loader'],
                 include: __dirname
             },
@@ -40,6 +40,6 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js','.jsx','.coffee','.isvg']
+        extensions: ['.js','.jsx','.coffee','.svg']
     }
 }

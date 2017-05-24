@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch fill="#EBEBEB"-->
+    <title>Combined Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
+        <g id="领队管理-领队信息-copy" transform="translate(-330.000000, -227.000000)" >
+            <path d="M378,275 L331.997538,275 C330.895051,275 330,275.895431 330,277 C330,278.11227 330.894328,279 331.997538,279 L378,279 L378,325.002462 C378,326.104949 378.895431,327 380,327 C381.11227,327 382,326.105672 382,325.002462 L382,279 L428.002462,279 C429.104949,279 430,278.104569 430,277 C430,275.88773 429.105672,275 428.002462,275 L382,275 L382,228.997538 C382,227.895051 381.104569,227 380,227 C378.88773,227 378,227.894328 378,228.997538 L378,275 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>

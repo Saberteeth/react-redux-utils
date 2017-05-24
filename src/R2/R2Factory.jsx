@@ -35,7 +35,7 @@ export function connectActionFactory(view, luncher, actions = {}) {
       oldState: state
     }
   };
-  actions.sendAction = function({
+  actions.sendAction = function ({
     who,
     active
   }, ...datas) {

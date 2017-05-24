@@ -20,3 +20,23 @@
     padding:2.5%;
   }
 }
+#vcons > ul > li{
+  list-style: none;
+  float: left;
+  border: 1px solid lightblue;
+  padding:20px;
+  margin:10px;
+}
+#vcons > ul > li:hover{
+  box-shadow: 0 0 18px rgba(129, 199, 132, 0.4);
+  border-color: rgba(129, 199, 132, 0.6);
+}
+
+#vcons > ul > li svg {
+  width:40px;
+  height: 40px;
+  fill: lightblue;
+}
+#vcons > ul > li svg:hover{
+  fill: lightgreen;
+}

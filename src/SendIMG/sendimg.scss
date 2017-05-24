@@ -1,0 +1,25 @@
+.iSendIMGView > .show {
+  opacity: 1;
+}
+
+.iSendIMGView > .hide{
+  opacity: 0;
+}
+
+.iSendIMGView > .imgView{
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, .3);
+}
+
+.iSendIMGView > .imgView > img{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+   
+
+.iSendIMGView .iCamera{
+  margin-right: 4px;
+  fill:white;
+}
