@@ -36,7 +36,10 @@ function ListView(props) {
 
 function HelloWorldView(props) {
   return (
-    <h1>Hello World</h1>
+    <div>
+      <h1>Hello</h1>
+      <div>This is a utils for react & redux.</div>
+    </div>
   )
 }
 export default class HomeView extends React.Component {
