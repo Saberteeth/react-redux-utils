@@ -8,14 +8,12 @@ import SubmitDemo from './Submitton/Demo';
 import R2Demo from './R2/Demo';
 import VComDemo from './VCon/Demo';
 
-
-
 const store = configureStore();
 
 function ListView(props) {
   return (
     <div className="right-content">
-      <h1>Utils</h1>
+      <h1>List</h1>
       <ul>
         <li>
           <Link to="/">Home</Link>

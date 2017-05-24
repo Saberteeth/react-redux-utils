@@ -7,6 +7,10 @@ export default ()=>{
     },1000);
   }
   return (
-    <Submit executor={executor}/>
+    <div>
+      <div>Timeout:1s</div>
+      <Submit executor={executor}/>
+    </div>
+    
   )
 }

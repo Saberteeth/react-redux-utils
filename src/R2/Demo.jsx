@@ -14,6 +14,7 @@ function Demo(props) {
 
   return (
     <div>
+      Phone:
       <input
         value={phone}
         onChange={props.inputChange}
@@ -22,7 +23,7 @@ function Demo(props) {
       }}
         type="tel"
         placeholder="Tell me your phone number, please."/>
-      <div>
+      <div style={{color:'red'}}>
         {msg}
       </div>
     </div>
