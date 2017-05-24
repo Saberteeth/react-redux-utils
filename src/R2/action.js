@@ -15,7 +15,7 @@ function inputChange(e){
   }
 
   return (dispatch)=>{
-    if(!data.msg){
+    if(data.phone){
       timeVerify(1500,()=>{
         if (value && !(/^1[34578]\d{9}$/.test(value))) {
           const data = {msg:"Failing number in China."};
