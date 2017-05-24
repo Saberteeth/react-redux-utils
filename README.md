@@ -1,11 +1,11 @@
 # react-redux-utils
 This is utils about react redux
 
-# Init
+## Init
 npm install
 
-# Run Demo
+## Run Demo
 npm start
 
-# Output Demo
+## Output Demo
 npm run build
