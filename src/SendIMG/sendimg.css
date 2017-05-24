@@ -1,0 +1,52 @@
+.t-sendimg{
+  border:1px solid lightgray;
+  padding: 1px;
+  position: relative;
+  overflow: hidden;
+  background: white;
+  text-align: center;
+}
+
+.t-input{
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.t-img{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.t-msg{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background: rgba(0,0,0,.6);
+  width: 90%;
+  margin-left: 3%;
+  color:white;
+  padding:2%;
+  border-radius: 4px;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all .2s;
+}
+
+.t-default{
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.t-msg svg{
+  fill:currentColor;
+  margin-right: 5px;
+} 
+
+.t-sendimg:hover > .t-msg{
+  opacity: 1;
+}

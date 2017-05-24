@@ -1,0 +1,18 @@
+<html>
+<body>
+<style>
+    #a:hover {color : #FFFF00;}
+    #a:hover > #b:first-child{color : #FF0000;}    
+    #a:hover > #b{color : #FF00FF;}  
+    #a:hover + #c{color : #00FF00;}
+    #a:hover + #c > #b{color : #0000FF;}
+</style>
+<div id='a'>元素1
+  <div id='b'>元素2</div>
+  <div id='b'>元素2</div>
+</div>
+<div id='c'>元素3
+  <div id='b'>元素2</div>
+</div>
+</body>
+</html>
