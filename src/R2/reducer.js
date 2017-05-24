@@ -3,6 +3,7 @@ import {actionType} from './action';
 function init(){
   return {
     phone: null,
+    msg: null
   }
 }
 

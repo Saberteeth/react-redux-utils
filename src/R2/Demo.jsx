@@ -2,21 +2,19 @@ import React from 'react';
 import R2Factory from './R2Factory';
 import {actions} from './action';
 
+
+const timer = null;
 function Demo(props) {
   const phone = props
     .getState()
     .phone;
-  let msg = "";
-
-  if (phone && !(/^1[34578]\d{9}$/.test(phone))) {
-    msg = "Failing number in China."
-  }
+  const msg = props.getState().msg;
 
   return (
     <div>
       Phone:
       <input
-        value={phone}
+        value={phone||""}
         onChange={props.inputChange}
         style={{
         width: '210px'
