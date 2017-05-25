@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import {HashRouter, Route, Link} from 'react-router-dom'
 import configureStore from './redux/reducer';
 import './home.css';
 
@@ -48,7 +48,7 @@ export default class HomeView extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <HashRouter>
           <div id="home-view">
             <ListView/>
             <div className="left-content">
@@ -59,7 +59,7 @@ export default class HomeView extends React.Component {
               <Route exact path="/sendimg" component={SendIMG}/>
             </div>
           </div>
-        </Router>
+        </HashRouter>
       </Provider>
     )
   }
