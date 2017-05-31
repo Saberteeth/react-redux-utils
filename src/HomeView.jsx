@@ -7,7 +7,8 @@ import './home.css';
 import SubmitDemo from './Submitton/Demo';
 import R2Demo from './R2/Demo';
 import VComDemo from './VCon/Demo';
-import SendIMG from './SendIMG/Demo';
+import SendIMGDemo from './SendIMG/Demo';
+import RxjsDemo from './Rxjs/Demo';
 
 const store = configureStore();
 
@@ -30,6 +31,9 @@ function ListView(props) {
         </li>
         <li>
           <Link to="/sendimg">SendIMG</Link>
+        </li>
+        <li>
+          <Link to="/rxjs">Rxjs</Link>
         </li>
       </ul>
     </div>
@@ -56,7 +60,8 @@ export default class HomeView extends React.Component {
               <Route exact path="/submit" component={SubmitDemo}/>
               <Route exact path="/r2" component={R2Demo}/>
               <Route exact path="/vcon" component={VComDemo}/>
-              <Route exact path="/sendimg" component={SendIMG}/>
+              <Route exact path="/sendimg" component={SendIMGDemo}/>
+              <Route exact path="/rxjs" component={RxjsDemo}/>
             </div>
           </div>
         </HashRouter>
