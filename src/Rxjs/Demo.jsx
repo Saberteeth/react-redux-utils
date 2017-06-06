@@ -6,6 +6,8 @@ const Type = {
   LOADEND:1,
   LOADERR:2
 }
+
+
 class Demo extends React.Component{
   constructor(props){
     super(props);
