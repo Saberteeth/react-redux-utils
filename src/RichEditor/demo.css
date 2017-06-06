@@ -1,0 +1,22 @@
+#show{
+  font-family: 'Georgia', serif;
+  background: #fff;
+  cursor: text;
+  font-size: 16px;
+  margin-top: 10px;
+  padding:12px;
+}
+
+#show pre{
+  background-color: rgba(0, 0, 0, 0.05);
+  font-size: 12px;
+  padding: 20px;
+}
+
+#show blockquote{
+  border-left: 4px solid #eee;
+  color: #666;
+  font-style: italic;
+  margin: 16px 0;
+  padding: 5px 10px;
+}
