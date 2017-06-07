@@ -19,7 +19,11 @@ export class Active {
     };
   }
 
-  getSubject() {
+  next(e){
+    this._subject.next(e);
+  }
+
+  get subject() {
     return this._subject;
   }
 }
