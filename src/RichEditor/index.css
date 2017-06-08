@@ -37,6 +37,11 @@
   background: #fff;
   padding:12px;
 }
+.RichEditor-tools svg{
+  fill:currentColor;
+  width: 25px;
+  height: 25px;
+}
 
 .RichEditor-styleButton {
   color: #999;
