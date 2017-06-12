@@ -20,3 +20,20 @@
   margin: 16px 0;
   padding: 5px 10px;
 }
+
+#show figure{
+  display: inline-block;
+  margin: 0px;
+}
+
+#show figure + * {
+  display: inline;
+}
+#show figure + * > * {
+  display: inherit;
+}
+#show figure > img{
+  margin-right: 5px;
+  margin-left: 5px;
+  height: 16px;
+}

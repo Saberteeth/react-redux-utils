@@ -54,3 +54,20 @@
 .RichEditor-activeButton {
   color: black;
 }
+
+.RichEditor-editor figure{
+  display: inline-block;
+  margin: 0px;
+}
+
+.RichEditor-editor figure + * {
+  display: inline;
+}
+.RichEditor-editor figure + * > * {
+  display: inherit;
+}
+.RichEditor-editor figure > img{
+  margin-right: 5px;
+  margin-left: 5px;
+  height: 16px;
+}

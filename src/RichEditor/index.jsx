@@ -4,48 +4,63 @@ import {
   EditorState,
   RichUtils,
   ContentState,
-  convertFromHTML
+  convertFromHTML,
+  AtomicBlockUtils,
+  Entity
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import "./index.css";
 import VCon from "../VCon/VCon";
-const { Bold, Titleone, Titletwo, Italic, List, Inport, Code, Unline } = VCon;
+import {BLOCK_TYPES, INLINE_STYLES, RCONS} from "./index.json";
+const { Camera } = VCon;
 
-const BLOCK_TYPES = [
-  { label: "<>", style: "code-block" },
-  { label: "1", style: "header-one" },
-  { label: "2", style: "header-two" },
-  { label: "’", style: "blockquote" },
-  { label: "UL", style: "unordered-list-item" }
-];
-const INLINE_STYLES = [
-  { label: "B", style: "BOLD" },
-  { label: "/", style: "ITALIC" },
-  { label: "U", style: "UNDERLINE" }
-];
 function label(name){
-  switch(name){
-    case "1":
-      return <Titleone />
-    case "2":
-      return <Titletwo />
-    case "UL":
-      return <List />
-    case "B":
-      return <Bold />
-    case "/":
-      return <Italic />
-    case "’":
-      return <Inport />
-    case "<>":
-      return <Code />;
-    case "U":
-      return <Unline />
-    default:
-      return <Bold />
+  let View = VCon[name];
+  if(!View){
+    View = Camera
+  }
+  return (
+    <View />
+  )
+}
+function explainStyle(map){
+  let inlineStyles = {};
+  for(name in map){
+    inlineStyles[name] = {
+      style:{
+        ...map[name]
+      }
+    };
+  }
+  return {inlineStyles:inlineStyles};
+}
+function mediaBlockRenderer(block) {
+  if (block.getType() === 'atomic') {
+    return {
+      component: RCon,
+      editable: false
+    };
+  }
+  return null;
+}
+const RCon = ({contentState,block}) => {
+  const entity = contentState.getEntity(block.getEntityAt(0))
+  const {src} = entity.getData();
+  return (
+    <img src={src} />
+  )
+}
+const styleMap = {
+  'RED': {
+    'fontSize':'16px',
+    'color':'#FFBE52',
+    'paddingLeft':'25px',
+    'backgroundImage':"url('/images/light.png')",
+    'backgroundRepeat':'no-repeat',
+    'backgroundSize': 'auto 100%'
   }
 }
-
+const options = explainStyle(styleMap);
 class StyleButton extends React.Component {
   constructor() {
     super();
@@ -66,13 +81,14 @@ class StyleButton extends React.Component {
     );
   }
 }
-const RichTools = ({ editorState, onToggle }) => {
+const RichTools = ({ editorState, onToggle, thas }) => {
   const selection = editorState.getSelection();
   const blockType = editorState
     .getCurrentContent()
     .getBlockForKey(selection.getStartKey())
     .getType();
   const currentStyle = editorState.getCurrentInlineStyle();
+  const contentState = editorState.getCurrentContent();
   return (
     <div className="RichEditor-tools">
       {INLINE_STYLES.map(type => (
@@ -93,11 +109,27 @@ const RichTools = ({ editorState, onToggle }) => {
           style={type.style}
         />
       ))}
+      {RCONS.map(type => {
+        const onclick = e => {
+          const entitiy = contentState.createEntity('image','IMMUTABLE',{src: type.src});
+          const entityKey = entitiy.getLastCreatedEntityKey();
+          thas.setState(
+            { editorState: AtomicBlockUtils.insertAtomicBlock(
+                  editorState,
+                  entityKey,
+                  "<img src='"+type.src+"' />"
+                )}
+          );
+        }
+        return (
+          <span key={type.label} onClick={onclick} className="RichEditor-styleButton">
+            {label(type.label)}
+          </span>
+        )
+      })}
     </div>
   );
 };
-
-
 class RichEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -105,7 +137,7 @@ class RichEditor extends React.Component {
     this.focus = () => this.refs.editor.focus();
     this.onChange = editorState => {
       const contentState = editorState.getCurrentContent();
-      if (onChange) onChange(stateToHTML(contentState));
+      if (onChange) onChange(stateToHTML(contentState, options));
 
       return this.setState({ editorState });
     };
@@ -134,7 +166,9 @@ class RichEditor extends React.Component {
         )
       );
     }
-    this.state = { editorState: initState };
+
+    // const entityKey = Entity.create('light','IMMUTABLE',{src: '/images/light.png'});
+    this.state = { editorState: initState};
   }
 
   _handleKeyCommand(command) {
@@ -166,12 +200,15 @@ class RichEditor extends React.Component {
         return null;
     }
   }
+
+
   render() {
     const { editorState } = this.state;
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
     let className = "RichEditor-editor";
-    var contentState = editorState.getCurrentContent();
+    const contentState = editorState.getCurrentContent();
+
     if (!contentState.hasText()) {
       if (contentState.getBlockMap().first().getType() !== "unstyled") {
         className += " RichEditor-hidePlaceholder";
@@ -180,11 +217,14 @@ class RichEditor extends React.Component {
     return (
       <div className="RichEditor">
         <RichTools
+          thas={this}
           editorState={editorState}
           onToggle={[this.toggleBlockType, this.toggleInlineStyle]}
         />
         <div className={className + " flag"} onClick={this.focus}>
           <Editor
+            blockRendererFn={mediaBlockRenderer}
+            customStyleMap={styleMap}
             blockStyleFn={this.getBlockStyle}
             editorState={editorState}
             handleKeyCommand={this.handleKeyCommand}
