@@ -43,9 +43,10 @@ a{
     right: 0;
     width: 100%;
     padding:0;
-    height: 40px;
     box-shadow: 0 1px 6px rgba(0,0,0,.6);
     border: none;
+    background:rgba(31,51,111,.8);
+    padding-bottom: 4px;
   }
 
   #home-view > .right-content >ul > li:hover{
@@ -59,7 +60,7 @@ a{
   }
   #home-view > .right-content > ul {
     height: 40px;
-    background:rgba(31,51,111,.8);
+ 
     margin: 0;
   }
 
