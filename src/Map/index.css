@@ -1,0 +1,78 @@
+.xmap .search-map {
+  display: inline-block;
+}
+
+.xmap .search-map-list{
+  background: white;
+  float: left;
+  padding:0px;
+}
+.xmap .search-map-list > li{
+  list-style: none;
+  padding:8px;
+  border-bottom: 1px solid rgba(231,231,231,.5);
+  margin-left: 4px;
+  margin-right:4px;
+  cursor: pointer;
+}
+
+.xmap .search-map-list > li:hover{
+  background: lightblue;
+  color: white;
+}
+
+.xmap .loading{
+  position: relative;
+  font-size: 30px;
+  color: darkblue;
+  top: -50%;
+  text-align: center;  
+  transform: translateY(-100%);
+}
+
+
+.xmap .amap-content-body{
+    border-radius: 4px;
+    overflow: hidden;
+    height: 32px;
+    font-size: 14px;
+    width: auto;
+    max-width: 300px;
+    min-width: 0px;
+}
+
+.xmap .xmap-mark{
+    padding-left: 6px;
+    margin-right: 32px;
+    text-align: left;
+}
+
+.xmap .xmap-mark button:focus{
+  outline: none;
+}
+
+.xmap .xmap-mark button{
+  float:right;
+  margin-left: 6px;
+  width:32px;
+  height:32px;
+  border:none;
+  background:#4CBF79;
+  color: white;
+  font-size: 20px;
+}
+
+.xmap .xmap-mark button:active{
+  background: lightgreen;
+}
+.xmap .xmap-mark div{
+  height: 32px;
+  max-width: 200px;
+  float: left;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  padding-top: 6px;
+}
+.xmap .xmap-line{
+  float: right;
+  transform: translateY(-130%) translateX(-10%);
+}

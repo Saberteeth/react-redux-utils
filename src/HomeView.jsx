@@ -10,6 +10,8 @@ import VComDemo from './VCon/Demo';
 import SendIMGDemo from './SendIMG/Demo';
 import RxjsDemo from './Rxjs/Demo';
 import RichEditorDemo from './RichEditor/Demo';
+import MapDemo from './Map/Demo';
+import ListViewDemo from './ListView/Demo';
 
 const store = configureStore();
 
@@ -39,6 +41,12 @@ function ListView(props) {
         <li>
           <Link to="/richeditor">RichEditor</Link>
         </li>
+         <li>
+          <Link to="/map">Map</Link>
+        </li>
+        <li>
+          <Link to="/list">ListView</Link>
+        </li>
       </ul>
     </div>
   )
@@ -67,6 +75,8 @@ export default class HomeView extends React.Component {
               <Route exact path="/sendimg" component={SendIMGDemo}/>
               <Route exact path="/rxjs" component={RxjsDemo}/>
               <Route exact path="/richeditor" component={RichEditorDemo}/>
+              <Route exact path="/map" component={MapDemo}/>
+              <Route exact path="/list" component={ListViewDemo}/>
             </div>
           </div>
         </HashRouter>

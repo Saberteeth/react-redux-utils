@@ -6,14 +6,15 @@ import {
   ContentState,
   convertFromHTML,
   AtomicBlockUtils,
-  Entity
+  Entity,
+  Modifier
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import "./index.css";
 import VCon from "../VCon/VCon";
 import {BLOCK_TYPES, INLINE_STYLES, RCONS} from "./index.json";
-const { Camera } = VCon;
 
+const { Camera } = VCon;
 function label(name){
   let View = VCon[name];
   if(!View){
@@ -89,9 +90,21 @@ const RichTools = ({ editorState, onToggle, thas }) => {
     .getType();
   const currentStyle = editorState.getCurrentInlineStyle();
   const contentState = editorState.getCurrentContent();
+
+  let inlinetools = INLINE_STYLES;
+  let blocktools = BLOCK_TYPES;
+  let rcontools = RCONS;
+
+  if(thas.props.tools){
+    const {inline = [],block = [],rcon = []} = thas.props.tools;
+    inlinetools = inline;
+    blocktools = block;
+    rcontools = rcon;
+  }
+
   return (
     <div className="RichEditor-tools">
-      {INLINE_STYLES.map(type => (
+      {inlinetools.map(type => (
         <StyleButton
           key={type.label}
           active={currentStyle.has(type.style)}
@@ -100,7 +113,7 @@ const RichTools = ({ editorState, onToggle, thas }) => {
           style={type.style}
         />
       ))}
-      {BLOCK_TYPES.map(type => (
+      {blocktools.map(type => (
         <StyleButton
           key={type.label}
           active={type.style === blockType}
@@ -109,7 +122,7 @@ const RichTools = ({ editorState, onToggle, thas }) => {
           style={type.style}
         />
       ))}
-      {RCONS.map(type => {
+      {rcontools.map(type => {
         const onclick = e => {
           const entitiy = contentState.createEntity('image','IMMUTABLE',{src: type.src});
           const entityKey = entitiy.getLastCreatedEntityKey();
@@ -136,9 +149,9 @@ class RichEditor extends React.Component {
     const { onChange } = this.props;
     this.focus = () => this.refs.editor.focus();
     this.onChange = editorState => {
+      //console.log(editorState.getCurrentContent());
       const contentState = editorState.getCurrentContent();
       if (onChange) onChange(stateToHTML(contentState, options));
-
       return this.setState({ editorState });
     };
     this.handleKeyCommand = command => this._handleKeyCommand(command);
@@ -146,12 +159,10 @@ class RichEditor extends React.Component {
     this.toggleBlockType = type => this._toggleBlockType(type);
     this.toggleInlineStyle = style => this._toggleInlineStyle(style);
   }
-
   componentWillMount() {
     const { value } = this.props;
     this.updataValue(value);
   }
-
   updataValue(value){
     let initState = null;
 
@@ -166,11 +177,9 @@ class RichEditor extends React.Component {
         )
       );
     }
-
     // const entityKey = Entity.create('light','IMMUTABLE',{src: '/images/light.png'});
     this.state = { editorState: initState};
   }
-
   _handleKeyCommand(command) {
     const { editorState } = this.state;
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -192,6 +201,35 @@ class RichEditor extends React.Component {
       RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
     );
   }
+
+  _addEmoji(text='⛽️') {
+    const { editorState } = this.state;
+    const selection = editorState.getSelection();
+    const contentState = editorState.getCurrentContent();
+    const txt = text;
+    let nextEditorState = EditorState.createEmpty();
+    if (selection.isCollapsed()) {
+      const nextContentState = Modifier.insertText(contentState, selection, txt);
+      nextEditorState = EditorState.push(
+        editorState,
+        nextContentState,
+        'insert-characters'
+      );
+    } else {
+      const nextContentState = Modifier.replaceText(contentState, selection, text);
+      nextEditorState = EditorState.push(
+        editorState,
+        nextContentState,
+        'insert-characters'
+      );
+    }
+    this.onChange(nextEditorState);
+  }
+
+  addEmoji(e){
+    this._addEmoji();
+  }
+
   getBlockStyle(block) {
     switch (block.getType()) {
       case "blockquote":
@@ -200,8 +238,6 @@ class RichEditor extends React.Component {
         return null;
     }
   }
-
-
   render() {
     const { editorState } = this.state;
     // If the user changes block type before entering any text, we can
@@ -216,6 +252,7 @@ class RichEditor extends React.Component {
     }
     return (
       <div className="RichEditor">
+        <button onClick={this.addEmoji.bind(this)}>add</button>
         <RichTools
           thas={this}
           editorState={editorState}
@@ -238,5 +275,4 @@ class RichEditor extends React.Component {
     );
   }
 }
-
 export default RichEditor;

@@ -9,10 +9,11 @@
   "INLINE_STYLES":[
     { "label": "Bold", "style": "BOLD" },
     { "label": "Italic", "style": "ITALIC" },
-    { "label": "Unline", "style": "UNDERLINE" }
+    { "label": "Unline", "style": "UNDERLINE" },
+    { "label": "Setting", "style": "RED" }
   ],
   "RCONS":[
-    {"label": "Light","src":"/images/light.png"},
+    {"label": "Light","src":"/images/gas.svg"},
     {"label": "Bianji","src":"/images/bianji.png"}
   ]
 }

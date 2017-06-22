@@ -26,7 +26,7 @@ class Main extends React.Component {
   render() {
     return (
       <div>
-        <RichEditor onChange={this.onChange.bind(this)} value={this.state.value} />
+        <RichEditor  onChange={this.onChange.bind(this)} value={this.state.value} />
         <div>
           <div id="show" dangerouslySetInnerHTML={{__html: this.state.html}} />
         </div>
