@@ -162,7 +162,7 @@ class XMap extends React.Component {
       success: AMap => {
         if (!AMap.plugin) {
           setTimeout(function() {
-            obj.success(AMap);
+            obj.success(window.AMap);
           }, 200);
           return;
         }
