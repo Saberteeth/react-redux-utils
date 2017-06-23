@@ -16,6 +16,7 @@ export class iHandler {
 export class ListView extends React.Component {
   constructor(props) {
     super(props);
+    this.oldTouchY = 0;
     this.updown = 0;
     this.maxHeight = 0;
     this.isEnd = false;
@@ -142,26 +143,46 @@ export class ListView extends React.Component {
     return result;
   }
 
+  _scroll(y){
+    this.updown = y;
+    let offY = this.state.scrollY - y;
+    if(this.maxHeight != 0){
+      offY = offY > this.maxHeight? offY%this.maxHeight:offY;
+    }
+    
+  
+    if (this.isEnd) {
+      offY = offY < this.endOFF ? this.endOFF : offY;
+    }
+    this.setState(Object.assign({}, this.state, { scrollY: offY }));
+  }
+
   render() {
     const wheel = e => {
       e.stopPropagation();
       e.preventDefault();
-      this.updown = e.deltaY;
-      let offY = this.state.scrollY - e.deltaY;
-      if(this.maxHeight != 0){
-        offY = offY > this.maxHeight? offY%this.maxHeight:offY;
-      }
-      
-    
-      if (this.isEnd) {
-        offY = offY < this.endOFF ? this.endOFF : offY;
-      }
-      this.setState(Object.assign({}, this.state, { scrollY: offY }));
+      this._scroll(e.deltaY);
     };
+    const touchStart = e =>{
+      if(!e.touches[0])return;
+      e.stopPropagation();
+      e.preventDefault();
+      this.oldTouchY = e.touches[0].clientY; 
+    }
+    const touchMove = e =>{
+      if(!e.touches[0])return;
+      e.stopPropagation();
+      e.preventDefault();
+      let newY = e.touches[0].clientY;
+      this._scroll(this.oldTouchY - newY);
+      this.oldTouchY = newY;
+    }
 
     return (
       <div
-        onWheel={wheel}
+        onTouchStart={touchStart.bind(this)}
+        onTouchMove = {touchMove.bind(this)}
+        onWheel={wheel.bind(this)}
         className="list-view"
         style={{
           width: this.width + "px",

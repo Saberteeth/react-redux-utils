@@ -3,7 +3,7 @@ import React from 'react';
 import {ListView,iHandler} from './index';
 
 const items = [];
-for(let i=0;i<100000;i+=1){
+for(let i=0;i<10;i+=1){
   items[i] = i;
 }
 
