@@ -16,6 +16,7 @@ export class iHandler {
 export class ListView extends React.Component {
   constructor(props) {
     super(props);
+    this.updown = 0;
     this.maxHeight = 0;
     this.isEnd = false;
     this.lastList = null;
@@ -36,14 +37,16 @@ export class ListView extends React.Component {
     for (
       let i = this.handler.getSize() - 1;
       i >= 0;
-      (i -= 1), (this.endSize += 1)
+      i -= 1
     ) {
       h += this.handler.getItem(i).height;
       off = this.height - h;
-      if (off < 0) {
+      this.endSize += 1
+      if (off <= 0) {
         break;
       }
     }
+
     this.endOFF = off > 0 ? 0 : off;
   }
 
@@ -95,13 +98,10 @@ export class ListView extends React.Component {
       }
 
       nowTop += item.height;
-
+      if(this.updown > 0)
       if (i == this.handler.getSize() - 1) {
-        if (nowTop + this.state.scrollY - this.height < item.height / 2) {
-          if(this.endSize != list.length){
-            this.state.begin -= 1;
-            list = [this.handler.getItem(this.state.begin),...list]
-          }
+        if (nowTop + this.state.scrollY - this.height < item.height/10) {
+          this.state.begin = this.handler.getSize() - this.endSize;
           this.isEnd = true;
         }
       }
@@ -146,12 +146,13 @@ export class ListView extends React.Component {
     const wheel = e => {
       e.stopPropagation();
       e.preventDefault();
+      this.updown = e.deltaY;
       let offY = this.state.scrollY - e.deltaY;
-
       if(this.maxHeight != 0){
         offY = offY > this.maxHeight? offY%this.maxHeight:offY;
       }
-
+      
+    
       if (this.isEnd) {
         offY = offY < this.endOFF ? this.endOFF : offY;
       }

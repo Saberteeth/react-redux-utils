@@ -48,7 +48,7 @@ class Handler extends iHandler{
     )
   }
   getItem(index){
-    return {height:100, data:items[index]};
+    return {height:130, data:items[index]};
   }
   getSize(){
     return items.length;
