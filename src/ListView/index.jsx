@@ -1,6 +1,13 @@
 import React from "react";
 import "./index.css";
+import PropTypes from 'prop-types';
 
+/**
+ * This is an abstract class, U must realize it's function;
+ * @abstract @function  getView => JSXView
+ * @abstract @function getItem => {height:number,data:object}
+ * @abstract @function getSize => number
+ */
 export class iHandler {
   getView(item) {
     return null;
@@ -13,6 +20,12 @@ export class iHandler {
   }
 }
 
+/**
+ * This is ListView, must have attribute height and handler.
+ * @prop height:number
+ * @prop width:number
+ * @prop handler:iHandler
+ */
 export class ListView extends React.Component {
   constructor(props) {
     super(props);
@@ -124,7 +137,9 @@ export class ListView extends React.Component {
     const result = [];
     list.map((item, index) => {
       const itemView = this.handler.getView(item);
-
+      if(!itemView){
+        throw new Error("U handler doesn't have function getView");
+      }
       const view = (
         <div
           key={index}
@@ -186,7 +201,7 @@ export class ListView extends React.Component {
         onWheel={wheel.bind(this)}
         className="list-view"
         style={{
-          width: this.width + "px",
+          width: this.width?this.width + "px":"100%",
           height: this.height + "px"
         }}
       >
@@ -195,3 +210,7 @@ export class ListView extends React.Component {
     );
   }
 }
+ListView.propTypes = {
+  height: PropTypes.number.isRequired,
+  handler: PropTypes.object.isRequired
+};
