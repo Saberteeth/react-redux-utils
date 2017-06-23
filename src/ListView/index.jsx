@@ -162,20 +162,21 @@ export class ListView extends React.Component {
       e.stopPropagation();
       e.preventDefault();
       this._scroll(e.deltaY);
+      return false;
     };
     const touchStart = e =>{
       if(!e.touches[0])return;
       e.stopPropagation();
-      e.preventDefault();
       this.oldTouchY = e.touches[0].clientY; 
+      return false;
     }
     const touchMove = e =>{
       if(!e.touches[0])return;
       e.stopPropagation();
-      e.preventDefault();
       let newY = e.touches[0].clientY;
       this._scroll(this.oldTouchY - newY);
       this.oldTouchY = newY;
+      return false;
     }
 
     return (
