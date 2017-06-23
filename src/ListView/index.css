@@ -5,6 +5,6 @@
 
 .list-view {
   overflow: hidden;
-
+  border: 1px solid black;
 }
 

@@ -2,11 +2,49 @@ import React from 'react';
 
 import {ListView,iHandler} from './index';
 
-const items = [1,2,3,4,5,6,7,8];
+const items = [];
+for(let i=0;i<100000;i+=1){
+  items[i] = i;
+}
+
+function listCreate(handler){
+  const li = [];
+  for(let i=0;i<handler.getSize();i+=1){
+    const item = handler.getItem(i);
+    const itemView = handler.getView(item);
+    const view = (
+       <div
+          key={i}
+          className="item"
+          style={{
+            width: "100%",
+            height: item.height + "px"
+          }}
+        >
+          {itemView}
+      </div>
+    )
+    li.push(view);
+  }
+  return li;
+}
+
 class Handler extends iHandler{
   getView(item){
+    let color = "white";
+    let bg = "black";
+
+    if(item.data%2 == 1)
+      color = "black";
+
+    if(item.data%2 == 1)
+      bg = "white";
+    
     return (
-      <div>{item.data}</div>
+      <div style={{background:color,width:"100%",height:"100%",color:bg}}>
+        <img height={item.height} src="/images/24404591.jpeg"/>
+        {item.data}
+      </div>
     )
   }
   getItem(index){
@@ -16,15 +54,19 @@ class Handler extends iHandler{
     return items.length;
   }
 
-  
-
 }
 const handler = new Handler();
 
 export default class Demo extends React.Component{
   render(){
     return (
-     <div>null</div>
+      <div>
+      <ListView width={300} height={600} handler={handler}/>
+        {/*<div style={{height:'550px',width:"300px",overflow:'auto'}}>
+          {listCreate(handler)}
+        </div>*/}
+      </div>
     )
   }
 }
+
