@@ -61,7 +61,6 @@ export class ListView extends React.Component {
         break;
       }
     }
-    console.log(off);
     this.endOFF = off > 0 ? 0 : off;
   }
 
@@ -77,7 +76,7 @@ export class ListView extends React.Component {
     if (percent < 0 || percent > 1) return;
     const max = this.handler.getSize() - this.endSize;
     const now = Math.floor(percent * max);
-    this.state.scrollY = 0;
+    this.state.scrollY = percent == 1 ? this.endOFF : 0;
     this.state.begin = now;
     this.setState(Object.assign({}, this.state));
   }

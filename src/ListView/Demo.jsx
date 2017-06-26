@@ -50,7 +50,7 @@ class Handler extends iHandler{
   getItem(index){
     let h = 100;
 
-    if(index%5 == 0)h = 200;
+    if(index%5 == 0)h = 130;
       
     return {height:h, data:items[index]};
   }
