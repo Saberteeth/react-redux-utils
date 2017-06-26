@@ -60,6 +60,13 @@ class Handler extends iHandler{
   }
   getItem(index){
     let h = 100;
+     if(index != 0 && index % 3 == 0){
+      h = 120;
+    }
+
+    if(index != 0 && index % 5 == 0){
+      h = 160;
+    }
     //h += Math.floor(Math.random()*100);
     return {height:h, data:items[index]};
   }
