@@ -3,7 +3,7 @@ import React from 'react';
 import {ListView,iHandler} from './index';
 
 const items = [];
-for(let i=0;i<10000;i+=1){
+for(let i=0;i<100;i+=1){
   items[i] = i;
 }
 
@@ -48,7 +48,11 @@ class Handler extends iHandler{
     )
   }
   getItem(index){
-    return {height:100, data:items[index]};
+    let h = 100;
+
+    if(index%5 == 0)h = 130;
+      
+    return {height:h, data:items[index]};
   }
   getSize(){
     return items.length;

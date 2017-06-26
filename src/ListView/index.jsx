@@ -90,12 +90,14 @@ export class ListView extends React.Component {
 
     for (let i = this.state.begin; i < this.handler.getSize(); i += 1) {
       const item = this.handler.getItem(i);
+      
+      if(i==this.state.begin)
       if (this.state.scrollY + item.height <= 0) {
         this.state.scrollY = 0;
         this.state.begin = i + 1;
         continue;
       }
-
+      
       if (this.state.scrollY > 0) {
         if (i == 0) {
           this.state.scrollY = 0;
@@ -173,6 +175,7 @@ export class ListView extends React.Component {
   }
 
   render() {
+    
     const wheel = e => {
       e.stopPropagation();
       e.preventDefault();
