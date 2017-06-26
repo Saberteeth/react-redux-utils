@@ -42,6 +42,11 @@ export class ListView extends React.Component {
       begin: 0
     };
     this.verify();
+    if(this.props.tools){
+      for(name in this.props.tools){
+        this.props.tools[name] = this[name].bind(this);
+      }
+    }
   }
 
   verify() {
@@ -70,6 +75,15 @@ export class ListView extends React.Component {
 
   set handler(handler) {
     this.setState(Object.assign({}, this.state, { handler: handler }));
+  }
+
+  onScroll(percent){
+    if(percent < 0 || percent > 1) return;
+    const max = this.handler.getSize() - this.endSize;
+    const now = Math.floor(percent * max);
+    this.state.scrollY = 0;
+    this.state.begin = now;
+    this.setState(Object.assign({}, this.state));
   }
 
   get width() {
@@ -175,7 +189,6 @@ export class ListView extends React.Component {
   }
 
   render() {
-    
     const wheel = e => {
       e.stopPropagation();
       e.preventDefault();
@@ -196,7 +209,6 @@ export class ListView extends React.Component {
       this.oldTouchY = newY;
       return false;
     }
-
     return (
       <div
         onTouchStart={touchStart.bind(this)}

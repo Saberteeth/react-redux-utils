@@ -50,7 +50,7 @@ class Handler extends iHandler{
   getItem(index){
     let h = 100;
 
-    if(index%5 == 0)h = 170;
+    if(index%5 == 0)h = 200;
       
     return {height:h, data:items[index]};
   }
@@ -60,12 +60,18 @@ class Handler extends iHandler{
 
 }
 const handler = new Handler();
-
+const tools = {
+  onScroll:null
+}
 export default class Demo extends React.Component{
+  
   render(){
     return (
       <div>
-      <ListView width={300} height={600} handler={handler}/>
+      <button onClick={e=>tools.onScroll(0)}>0%</button> 
+      <button onClick={e=>tools.onScroll(.5)}>50%</button>
+      <button onClick={e=>tools.onScroll(1)}>100%</button>  
+      <ListView tools={tools} width={300} height={600} handler={handler}/>
         {/*<div style={{height:'550px',width:"300px",overflow:'auto'}}>
           {listCreate(handler)}
         </div>*/}
