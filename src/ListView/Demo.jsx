@@ -59,19 +59,32 @@ class Handler extends iHandler{
   }
 
 }
+let height = 600;
 const handler = new Handler();
 const tools = {
-  onScroll:null
+  onScroll:null,
+  verify:null
 }
 export default class Demo extends React.Component{
-  
+  constructor(props){
+    super(props);
+    this.state = {
+      height: 600
+    }
+  }
+  changeHeight(){
+    let h = this.state.height == 600?400:600;
+    this.setState({height:h});
+    tools.verify();  
+  }
   render(){
     return (
       <div>
-      <button onClick={e=>tools.onScroll(0)}>0%</button> 
-      <button onClick={e=>tools.onScroll(.5)}>50%</button>
-      <button onClick={e=>tools.onScroll(1)}>100%</button>  
-      <ListView tools={tools} width={300} height={600} handler={handler}/>
+        <button onClick={e=>{this.changeHeight()}}>Height Change</button>   
+        <button onClick={e=>tools.onScroll(0)}>0%</button> 
+        <button onClick={e=>tools.onScroll(.5)}>50%</button>
+        <button onClick={e=>tools.onScroll(1)}>100%</button>  
+        <ListView tools={tools} width={300} height={this.state.height} handler={handler}/>
         {/*<div style={{height:'550px',width:"300px",overflow:'auto'}}>
           {listCreate(handler)}
         </div>*/}

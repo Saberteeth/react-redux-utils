@@ -50,18 +50,21 @@ export class ListView extends React.Component {
   }
 
   verify() {
-    this.endSize = 0;
-    let h = 0;
-    let off = 0;
-    for (let i = this.handler.getSize() - 1; i >= 0; i -= 1) {
-      h += this.handler.getItem(i).height;
-      off = this.height - h;
-      this.endSize += 1;
-      if (off <= 0) {
-        break;
+    const thas = this;
+    setTimeout(() => {
+      thas.endSize = 0;
+      let h = 0;
+      let off = 0;
+      for (let i = thas.handler.getSize() - 1; i >= 0; i -= 1) {
+        h += thas.handler.getItem(i).height;
+        off = thas.height - h;
+        thas.endSize += 1;
+        if (off <= 0) {
+          break;
+        }
       }
-    }
-    this.endOFF = off > 0 ? 0 : off;
+      thas.endOFF = off > 0 ? 0 : off;
+    }, 0);
   }
 
   get handler() {
