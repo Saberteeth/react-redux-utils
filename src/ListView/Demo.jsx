@@ -41,7 +41,7 @@ class Handler extends iHandler{
       bg = "white";
     
     return (
-      <div style={{background:color,width:"100%",height:"100%",color:bg}}>
+      <div style={{borderBottom:"1px solid black",background:color,width:"100%",height:"100%",color:bg}}>
         <img height={item.height} src="/images/24404591.jpeg"/>
         {item.data}
       </div>

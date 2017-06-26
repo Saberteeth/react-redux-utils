@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
-import PropTypes from 'prop-types';
-const UNIT = "px"
+import PropTypes from "prop-types";
+const UNIT = "px";
 /**
  * This is an abstract class, U must realize it's function;
  * @abstract @function  getView => JSXView
@@ -42,8 +42,8 @@ export class ListView extends React.Component {
       begin: 0
     };
     this.verify();
-    if(this.props.tools){
-      for(name in this.props.tools){
+    if (this.props.tools) {
+      for (name in this.props.tools) {
         this.props.tools[name] = this[name].bind(this);
       }
     }
@@ -53,19 +53,15 @@ export class ListView extends React.Component {
     this.endSize = 0;
     let h = 0;
     let off = 0;
-    for (
-      let i = this.handler.getSize() - 1;
-      i >= 0;
-      i -= 1
-    ) {
+    for (let i = this.handler.getSize() - 1; i >= 0; i -= 1) {
       h += this.handler.getItem(i).height;
       off = this.height - h;
-      this.endSize += 1
+      this.endSize += 1;
       if (off <= 0) {
         break;
       }
     }
-
+    console.log(off);
     this.endOFF = off > 0 ? 0 : off;
   }
 
@@ -77,8 +73,8 @@ export class ListView extends React.Component {
     this.setState(Object.assign({}, this.state, { handler: handler }));
   }
 
-  onScroll(percent){
-    if(percent < 0 || percent > 1) return;
+  onScroll(percent) {
+    if (percent < 0 || percent > 1) return;
     const max = this.handler.getSize() - this.endSize;
     const now = Math.floor(percent * max);
     this.state.scrollY = 0;
@@ -104,14 +100,14 @@ export class ListView extends React.Component {
 
     for (let i = this.state.begin; i < this.handler.getSize(); i += 1) {
       const item = this.handler.getItem(i);
-      
-      if(i==this.state.begin)
-      if (this.state.scrollY + item.height <= 0) {
-        this.state.scrollY = 0;
-        this.state.begin = i + 1;
-        continue;
-      }
-      
+
+      if (i == this.state.begin)
+        if (this.state.scrollY + item.height <= 0) {
+          this.state.scrollY = 0;
+          this.state.begin = i + 1;
+          continue;
+        }
+
       if (this.state.scrollY > 0) {
         if (i == 0) {
           this.state.scrollY = 0;
@@ -128,15 +124,15 @@ export class ListView extends React.Component {
       }
 
       nowTop += item.height;
-      if(this.updown > 0)
-      if (i == this.handler.getSize() - 1) {
-        if (nowTop + this.state.scrollY - this.height < item.height/10) {
-          this.state.begin = this.handler.getSize() - this.endSize;
-          this.isEnd = true;
+      if (this.updown > 0)
+        if (i == this.handler.getSize() - 1) {
+          if (nowTop + this.state.scrollY - this.height < item.height / 10) {
+            this.state.begin = this.handler.getSize() - this.endSize;
+            this.isEnd = true;
+          }
         }
-      }
 
-      if(!b){
+      if (!b) {
         this.maxHeight = item.height;
       }
 
@@ -153,7 +149,7 @@ export class ListView extends React.Component {
     const result = [];
     list.map((item, index) => {
       const itemView = this.handler.getView(item);
-      if(!itemView){
+      if (!itemView) {
         throw new Error("U handler doesn't have function getView");
       }
       const view = (
@@ -174,14 +170,13 @@ export class ListView extends React.Component {
     return result;
   }
 
-  _scroll(y){
+  _scroll(y) {
     this.updown = y;
     let offY = this.state.scrollY - y;
-    if(this.maxHeight != 0){
-      offY = offY > this.maxHeight? offY%this.maxHeight:offY;
+    if (this.maxHeight != 0) {
+      offY = offY > this.maxHeight ? offY % this.maxHeight : offY;
     }
-    
-  
+
     if (this.isEnd) {
       offY = offY < this.endOFF ? this.endOFF : offY;
     }
@@ -195,28 +190,28 @@ export class ListView extends React.Component {
       this._scroll(e.deltaY);
       return false;
     };
-    const touchStart = e =>{
-      if(!e.touches[0])return;
+    const touchStart = e => {
+      if (!e.touches[0]) return;
       e.stopPropagation();
-      this.oldTouchY = e.touches[0].clientY; 
+      this.oldTouchY = e.touches[0].clientY;
       return false;
-    }
-    const touchMove = e =>{
-      if(!e.touches[0])return;
+    };
+    const touchMove = e => {
+      if (!e.touches[0]) return;
       e.stopPropagation();
       let newY = e.touches[0].clientY;
       this._scroll(this.oldTouchY - newY);
       this.oldTouchY = newY;
       return false;
-    }
+    };
     return (
       <div
         onTouchStart={touchStart.bind(this)}
-        onTouchMove = {touchMove.bind(this)}
+        onTouchMove={touchMove.bind(this)}
         onWheel={wheel.bind(this)}
         className="list-view"
         style={{
-          width: this.width?this.width + UNIT:"100%",
+          width: this.width ? this.width + UNIT : "100%",
           height: this.height + UNIT
         }}
       >
