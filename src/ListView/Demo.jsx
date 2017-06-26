@@ -1,6 +1,17 @@
 import React from 'react';
-
+import Rx from "rxjs";
 import {ListView,iHandler} from './index';
+
+const viewSubject = new Rx.Subject().delay(200);
+viewSubject.subscribe({
+  next: ({height,demo})=>{
+    if(viewSubject.height == height){
+      console.log("view change");
+      demo.setState({height:height});
+      tools.verify();
+    }
+  }
+})
 
 const items = [];
 for(let i=0;i<100000;i+=1){
@@ -49,7 +60,7 @@ class Handler extends iHandler{
   }
   getItem(index){
     let h = 100;
-    h += index % 10 * 10
+    //h += Math.floor(Math.random()*100);
     return {height:h, data:items[index]};
   }
   getSize(){
@@ -66,23 +77,32 @@ const tools = {
 export default class Demo extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      height: 600
+    window.onresize = (e) =>{
+      this.changeHeight();
     }
+    this.state = {
+      height: 200
+    }
+    this.changeHeight();
   }
   changeHeight(){
-    let h = this.state.height == 600?400:600;
-    this.setState({height:h});
-    tools.verify();  
+    let h = window.innerHeight - 200;
+    h = h < 200?200:h;
+    viewSubject.height = h;
+    viewSubject.next({height:h,demo:this});
   }
   render(){
     return (
       <div>
-        <button onClick={e=>{this.changeHeight()}}>Height Change</button>   
-        <button onClick={e=>tools.onScroll(0)}>0%</button> 
-        <button onClick={e=>tools.onScroll(.5)}>50%</button>
-        <button onClick={e=>tools.onScroll(1)}>100%</button>  
-        <ListView tools={tools} width={300} height={this.state.height} handler={handler}/>
+        <div style={{float:"left"}}>
+          <ListView tools={tools} width={300} height={this.state.height} handler={handler}/>
+        </div>
+        <div style={{float:"left",marginLeft:"10px"}}>
+          <button onClick={e=>tools.onScroll(0)}>0%</button> 
+          <button onClick={e=>tools.onScroll(.5)}>50%</button>
+          <button onClick={e=>tools.onScroll(1)}>100%</button>   
+          <div>U can change the browser's height to look at the result</div>
+        </div> 
         {/*<div style={{height:'550px',width:"300px",overflow:'auto'}}>
           {listCreate(handler)}
         </div>*/}
