@@ -8,7 +8,7 @@ viewSubject.subscribe({
     if(viewSubject.height == height){
       console.log("view change");
       demo.setState({height:height});
-      tools.verify();
+      tools.updataView();
     }
   }
 })
@@ -72,7 +72,7 @@ let height = 600;
 const handler = new Handler();
 const tools = {
   onScroll:null,
-  verify:null
+  updataView:null
 }
 export default class Demo extends React.Component{
   constructor(props){

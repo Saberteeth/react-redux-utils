@@ -41,7 +41,7 @@ export class ListView extends React.Component {
       scrollY: 0,
       begin: 0
     };
-    this.verify();
+    this.updataView();
     if (this.props.tools) {
       for (name in this.props.tools) {
         this.props.tools[name] = this[name].bind(this);
@@ -49,7 +49,7 @@ export class ListView extends React.Component {
     }
   }
 
-  verify() {
+  updataView() {
     const thas = this;
     setTimeout(() => {
       thas.endSize = 0;
