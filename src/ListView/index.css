@@ -1,9 +1,9 @@
 .list-view .item{
-  position: relative;
+  position: relative!important;
 }
 
 .list-view {
-  overflow: hidden;
+  overflow: hidden!important;
   border: 1px solid black;
 }
 
