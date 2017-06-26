@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const UNIT = "px";
 /**
  * This is an abstract class, U must realize it's function;
- * @abstract @function  getView => JSXView
+ * @abstract @function  getView => JSX.Element
  * @abstract @function getItem => {height:number,data:object}
  * @abstract @function getSize => number
  */
