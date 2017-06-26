@@ -157,7 +157,7 @@ export class ListView extends React.Component {
       const view = (
         <div
           key={index}
-          className="item"
+          className="list-view-item"
           style={{
             top: this.state.scrollY,
             width: "100%",

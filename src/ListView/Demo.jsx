@@ -1,7 +1,7 @@
 import React from 'react';
 import Rx from "rxjs";
 import {ListView,iHandler} from './index';
-
+import './demo.css';
 const viewSubject = new Rx.Subject().delay(200);
 viewSubject.subscribe({
   next: ({height,demo})=>{
@@ -52,8 +52,8 @@ class Handler extends iHandler{
       bg = "white";
     
     return (
-      <div style={{borderBottom:"1px solid black",background:color,width:"100%",height:"100%",color:bg}}>
-        <img height={item.height} src="/images/24404591.jpeg"/>
+      <div className="item" style={{borderBottom:"1px solid black",background:color,width:"100%",height:"100%",color:bg}}>
+        <img onClick={e=>alert(item.data)} height={item.height} src="/images/24404591.jpeg"/>
         {item.data}
       </div>
     )
