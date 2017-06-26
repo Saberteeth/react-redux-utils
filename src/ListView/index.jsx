@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
 import PropTypes from 'prop-types';
-
+const UNIT = "px"
 /**
  * This is an abstract class, U must realize it's function;
  * @abstract @function  getView => JSXView
@@ -163,7 +163,7 @@ export class ListView extends React.Component {
           style={{
             top: this.state.scrollY,
             width: "100%",
-            height: item.height + "px"
+            height: item.height + UNIT
           }}
         >
           {itemView}
@@ -216,8 +216,8 @@ export class ListView extends React.Component {
         onWheel={wheel.bind(this)}
         className="list-view"
         style={{
-          width: this.width?this.width + "px":"100%",
-          height: this.height + "px"
+          width: this.width?this.width + UNIT:"100%",
+          height: this.height + UNIT
         }}
       >
         {this._createView()}
