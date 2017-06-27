@@ -249,11 +249,16 @@ export class ListView extends React.Component {
         this.onScroll(top / maxTop, !this.isHideScroll);
       };
     };
+    const mouseDownOutSide = e => {
+      //console.log(e.clientY,this.height);
+      //console.log(e.clientY);
+    
+    }
 
     return (
       <div>
         {this.isHideScroll ? null:(
-          <div className="list-view-scroll" style={{ height: this.height }}>
+          <div onMouseDown={mouseDownOutSide.bind(this)} className="list-view-scroll" style={{ height: this.height }}>
             {this.state.scrollHeight != this.height
               ? <div
                   onMouseDown={mouseDown.bind(this)}
