@@ -14,9 +14,10 @@ viewSubject.subscribe({
 })
 
 const items = [];
-for(let i=0;i<50;i+=1){
+for(let i=0;i<100000;i+=1){
   items[i] = i;
 }
+
 
 function listCreate(handler){
   const li = [];
@@ -100,7 +101,7 @@ export default class Demo extends React.Component{
     return (
       <div>
         <div style={{float:"left"}}>
-          <ListView isShowScroll={true} tools={tools} width={300} height={this.state.height} handler={handler}/>
+          <ListView  tools={tools} width={300} height={this.state.height} handler={handler}/>
         </div>
         <div style={{float:"left",marginLeft:"10px"}}>
           <button onClick={e=>tools.onScroll(0)}>0%</button> 
