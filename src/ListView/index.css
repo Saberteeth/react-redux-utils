@@ -7,3 +7,19 @@
   border: 1px solid black;
 }
 
+.list-view-scroll{
+  float: right;
+  background: rgba(255,255,255,.5);
+  width: 10px;
+}
+
+.list-view-scroll-btn{
+  position: relative;
+  background-color: rgba(160,160,160,.6);
+  border-radius: 3px;
+}
+
+.list-view-scroll-btn:hover{
+  cursor: pointer;
+}
+

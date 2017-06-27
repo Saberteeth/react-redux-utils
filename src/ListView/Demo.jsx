@@ -14,7 +14,7 @@ viewSubject.subscribe({
 })
 
 const items = [];
-for(let i=0;i<100000;i+=1){
+for(let i=0;i<50;i+=1){
   items[i] = i;
 }
 
@@ -63,11 +63,9 @@ class Handler extends iHandler{
      if(index != 0 && index % 3 == 0){
       h = 120;
     }
-
     if(index != 0 && index % 5 == 0){
       h = 160;
     }
-    //h += Math.floor(Math.random()*100);
     return {height:h, data:items[index]};
   }
   getSize(){
@@ -102,7 +100,7 @@ export default class Demo extends React.Component{
     return (
       <div>
         <div style={{float:"left"}}>
-          <ListView tools={tools} width={300} height={this.state.height} handler={handler}/>
+          <ListView isShowScroll={true} tools={tools} width={300} height={this.state.height} handler={handler}/>
         </div>
         <div style={{float:"left",marginLeft:"10px"}}>
           <button onClick={e=>tools.onScroll(0)}>0%</button> 

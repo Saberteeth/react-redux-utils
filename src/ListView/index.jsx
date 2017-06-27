@@ -36,10 +36,14 @@ export class ListView extends React.Component {
     this.lastList = null;
     this.endOFF = 0;
     this.endSize = 0;
+    this.scrollOffY = 0;
+    this.isHideScroll = !props.isShowScroll;
     this.state = {
       handler: props.handler,
       scrollY: 0,
-      begin: 0
+      begin: 0,
+      scrollHeight: 30,
+      scrollTop: 0
     };
     this.updataView();
     if (this.props.tools) {
@@ -64,6 +68,13 @@ export class ListView extends React.Component {
         }
       }
       thas.endOFF = off > 0 ? 0 : off;
+      let scrollHeight = Math.floor(
+        this.height * (this.endSize / this.handler.getSize())
+      );
+      scrollHeight = scrollHeight < 30 ? 30 : scrollHeight;
+      thas.setState(
+        Object.assign({}, this.state, { scrollHeight: scrollHeight })
+      );
     }, 0);
   }
 
@@ -75,8 +86,14 @@ export class ListView extends React.Component {
     this.setState(Object.assign({}, this.state, { handler: handler }));
   }
 
-  onScroll(percent) {
+  onScroll(percent, iScrollChange) {
     if (percent < 0 || percent > 1) return;
+
+    if (!iScrollChange) {
+      let maxTop = this.height - this.state.scrollHeight;
+      this.state.scrollTop = percent * maxTop;
+    }
+
     const max = this.handler.getSize() - this.endSize;
     const now = Math.floor(percent * max);
     this.state.scrollY = percent == 1 ? this.endOFF : 0;
@@ -169,6 +186,7 @@ export class ListView extends React.Component {
       );
       result.push(view);
     });
+
     return result;
   }
 
@@ -181,6 +199,12 @@ export class ListView extends React.Component {
 
     if (this.isEnd) {
       offY = offY < this.endOFF ? this.endOFF : offY;
+    }
+    
+    if(!this.isHideScroll){
+      let maxTop = this.height - this.state.scrollHeight;
+      this.state.scrollTop =
+        this.state.begin / (this.handler.getSize() - this.endSize) * maxTop;
     }
     this.setState(Object.assign({}, this.state, { scrollY: offY }));
   }
@@ -206,18 +230,54 @@ export class ListView extends React.Component {
       this.oldTouchY = newY;
       return false;
     };
+    const mouseDown = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.scrollOffY = e.clientY - this.state.scrollTop;
+      window.onmouseup = e => {
+        window.onmousemove = null;
+        window.onmouseup = null;
+      };
+      window.onmousemove = e => {
+        e.preventDefault();
+        e.stopPropagation();
+        let top = e.clientY - this.scrollOffY;
+        top = top < 0 ? 0 : top;
+        let maxTop = this.height - this.state.scrollHeight;
+        top = top > maxTop ? maxTop : top;
+        this.state.scrollTop = top;
+        this.onScroll(top / maxTop, !this.isHideScroll);
+      };
+    };
+
     return (
-      <div
-        onTouchStart={touchStart.bind(this)}
-        onTouchMove={touchMove.bind(this)}
-        onWheel={wheel.bind(this)}
-        className="list-view"
-        style={{
-          width: this.width ? this.width + UNIT : "100%",
-          height: this.height + UNIT
-        }}
-      >
-        {this._createView()}
+      <div>
+        {this.isHideScroll ? null:(
+          <div className="list-view-scroll" style={{ height: this.height }}>
+            {this.state.scrollHeight != this.height
+              ? <div
+                  onMouseDown={mouseDown.bind(this)}
+                  className="list-view-scroll-btn"
+                  style={{
+                    height: this.state.scrollHeight,
+                    top: this.state.scrollTop + "px"
+                  }}
+                />
+              : null}
+          </div>
+        )}
+        <div
+          onTouchStart={touchStart.bind(this)}
+          onTouchMove={touchMove.bind(this)}
+          onWheel={wheel.bind(this)}
+          className="list-view"
+          style={{
+            width: this.width ? this.width + UNIT : "100%",
+            height: this.height + UNIT
+          }}
+        >
+          {this._createView()}
+        </div>
       </div>
     );
   }
