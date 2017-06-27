@@ -230,7 +230,8 @@ export class ListView extends React.Component {
       this.oldTouchY = newY;
       return false;
     };
-    const mouseDown = e => {
+    
+    const mouseDownScroll = e => {
       e.preventDefault();
       e.stopPropagation();
       this.scrollOffY = e.clientY - this.state.scrollTop;
@@ -249,12 +250,11 @@ export class ListView extends React.Component {
         this.onScroll(top / maxTop, !this.isHideScroll);
       };
     };
-    const touchDown = e => {
+    const touchDownScroll = e => {
       e.stopPropagation();
       this.scrollOffY = e.touches[0].clientY - this.state.scrollTop;
-    }
-
-    const touchMove2 = e =>{
+    };
+    const touchMoveScroll = e =>{
       e.stopPropagation();
       let top = e.touches[0].clientY - this.scrollOffY;
       top = top < 0 ? 0 : top;
@@ -262,17 +262,16 @@ export class ListView extends React.Component {
       top = top > maxTop ? maxTop : top;
       this.state.scrollTop = top;
       this.onScroll(top / maxTop, !this.isHideScroll);
-    }
-
+    };
     return (
       <div>
         {this.isHideScroll ? null:(
           <div className="list-view-scroll" style={{ height: this.height }}>
             {this.state.scrollHeight != this.height
               ? <div
-                  onTouchMove={touchMove2}
-                  onTouchStart={touchDown.bind(this)}
-                  onMouseDown={mouseDown.bind(this)}
+                  onTouchMove={touchMoveScroll}
+                  onTouchStart={touchDownScroll.bind(this)}
+                  onMouseDown={mouseDownScroll.bind(this)}
                   className="list-view-scroll-btn"
                   style={{
                     height: this.state.scrollHeight,
