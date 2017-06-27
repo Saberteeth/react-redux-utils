@@ -20,6 +20,11 @@ export class iHandler {
   }
 }
 
+function pointerY(event) 
+{ 
+return event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop)); 
+}
+
 /**
  * This is ListView, must have attribute height and handler.
  * @prop height:number
@@ -263,14 +268,12 @@ export class ListView extends React.Component {
       this.state.scrollTop = top;
       this.onScroll(top / maxTop, !this.isHideScroll);
     };
-    const scrollJump = e => {
-      this.onScroll((e.clientY - 67) / this.height);
-    }
+
     return (
       <div>
         {this.isHideScroll
           ? null
-          : <div onMouseDown={scrollJump.bind(this)}  className="list-view-scroll" style={{ height: this.height }}>
+          : <div   className="list-view-scroll" style={{ height: this.height }}>
               {this.state.scrollHeight != this.height
                 ? <div
                     onTouchMove={touchMoveScroll}
