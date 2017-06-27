@@ -200,8 +200,8 @@ export class ListView extends React.Component {
     if (this.isEnd) {
       offY = offY < this.endOFF ? this.endOFF : offY;
     }
-    
-    if(!this.isHideScroll){
+
+    if (!this.isHideScroll) {
       let maxTop = this.height - this.state.scrollHeight;
       this.state.scrollTop =
         this.state.begin / (this.handler.getSize() - this.endSize) * maxTop;
@@ -230,7 +230,7 @@ export class ListView extends React.Component {
       this.oldTouchY = newY;
       return false;
     };
-    
+
     const mouseDownScroll = e => {
       e.preventDefault();
       e.stopPropagation();
@@ -254,7 +254,7 @@ export class ListView extends React.Component {
       e.stopPropagation();
       this.scrollOffY = e.touches[0].clientY - this.state.scrollTop;
     };
-    const touchMoveScroll = e =>{
+    const touchMoveScroll = e => {
       e.stopPropagation();
       let top = e.touches[0].clientY - this.scrollOffY;
       top = top < 0 ? 0 : top;
@@ -263,24 +263,27 @@ export class ListView extends React.Component {
       this.state.scrollTop = top;
       this.onScroll(top / maxTop, !this.isHideScroll);
     };
+    const scrollJump = e => {
+      this.onScroll((e.clientY - 67) / this.height);
+    }
     return (
       <div>
-        {this.isHideScroll ? null:(
-          <div className="list-view-scroll" style={{ height: this.height }}>
-            {this.state.scrollHeight != this.height
-              ? <div
-                  onTouchMove={touchMoveScroll}
-                  onTouchStart={touchDownScroll.bind(this)}
-                  onMouseDown={mouseDownScroll.bind(this)}
-                  className="list-view-scroll-btn"
-                  style={{
-                    height: this.state.scrollHeight,
-                    top: this.state.scrollTop + "px"
-                  }}
-                />
-              : null}
-          </div>
-        )}
+        {this.isHideScroll
+          ? null
+          : <div onMouseDown={scrollJump.bind(this)}  className="list-view-scroll" style={{ height: this.height }}>
+              {this.state.scrollHeight != this.height
+                ? <div
+                    onTouchMove={touchMoveScroll}
+                    onTouchStart={touchDownScroll.bind(this)}
+                    onMouseDown={mouseDownScroll.bind(this)}
+                    className="list-view-scroll-btn"
+                    style={{
+                      height: this.state.scrollHeight,
+                      top: this.state.scrollTop + "px"
+                    }}
+                  />
+                : null}
+            </div>}
         <div
           onTouchStart={touchStart.bind(this)}
           onTouchMove={touchMove.bind(this)}
