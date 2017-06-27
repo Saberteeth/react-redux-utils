@@ -20,11 +20,6 @@ export class iHandler {
   }
 }
 
-function pointerY(event) 
-{ 
-return event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop)); 
-}
-
 /**
  * This is ListView, must have attribute height and handler.
  * @prop height:number
