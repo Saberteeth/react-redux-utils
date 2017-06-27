@@ -15,8 +15,8 @@
 
 .list-view-scroll-btn{
   position: relative;
-  background-color: rgba(160,160,160,.6);
-  border-radius: 3px;
+  background-color: rgba(160,160,160,.9);
+  border-radius: 4px;
 }
 
 .list-view-scroll-btn:hover{

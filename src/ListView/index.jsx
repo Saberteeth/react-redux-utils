@@ -249,14 +249,29 @@ export class ListView extends React.Component {
         this.onScroll(top / maxTop, !this.isHideScroll);
       };
     };
-  
+    const touchDown = e => {
+      e.stopPropagation();
+      this.scrollOffY = e.touches[0].clientY - this.state.scrollTop;
+    }
+
+    const touchMove2 = e =>{
+      e.stopPropagation();
+      let top = e.touches[0].clientY - this.scrollOffY;
+      top = top < 0 ? 0 : top;
+      let maxTop = this.height - this.state.scrollHeight;
+      top = top > maxTop ? maxTop : top;
+      this.state.scrollTop = top;
+      this.onScroll(top / maxTop, !this.isHideScroll);
+    }
 
     return (
       <div>
         {this.isHideScroll ? null:(
-          <div  className="list-view-scroll" style={{ height: this.height }}>
+          <div className="list-view-scroll" style={{ height: this.height }}>
             {this.state.scrollHeight != this.height
               ? <div
+                  onTouchMove={touchMove2}
+                  onTouchStart={touchDown.bind(this)}
                   onMouseDown={mouseDown.bind(this)}
                   className="list-view-scroll-btn"
                   style={{
