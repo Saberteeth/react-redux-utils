@@ -18,27 +18,27 @@ for (let i = 0; i < 500; i += 1) {
   items[i] = i;
 }
 
-function listCreate(handler) {
-  const li = [];
-  for (let i = 0; i < handler.getSize(); i += 1) {
-    const item = handler.getItem(i);
-    const itemView = handler.getView(item);
-    const view = (
-      <div
-        key={i}
-        className="item"
-        style={{
-          width: "100%",
-          height: item.height + "px"
-        }}
-      >
-        {itemView}
-      </div>
-    );
-    li.push(view);
-  }
-  return li;
-}
+// function listCreate(handler) {
+//   const li = [];
+//   for (let i = 0; i < handler.getSize(); i += 1) {
+//     const item = handler.getItem(i);
+//     const itemView = handler.getView(item);
+//     const view = (
+//       <div
+//         key={i}
+//         className="item"
+//         style={{
+//           width: "100%",
+//           height: item.height + "px"
+//         }}
+//       >
+//         {itemView}
+//       </div>
+//     );
+//     li.push(view);
+//   }
+//   return li;
+// }
 
 class Handler extends iHandler {
   getView(item) {
@@ -119,9 +119,6 @@ export default class Demo extends React.Component {
           />
         </div>
         <div style={{ float: "left", marginLeft: "10px" }}>
-          <button onClick={e => tools.onScroll(0)}>0%</button>
-          <button onClick={e => tools.onScroll(0.5)}>50%</button>
-          <button onClick={e => tools.onScroll(1)}>100%</button>
           <div>U can change the browser's height to look at the result</div>
         </div>
         {/*<div style={{height:'550px',width:"300px",overflow:'auto'}}>
