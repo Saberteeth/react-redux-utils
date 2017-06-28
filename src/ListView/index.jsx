@@ -233,12 +233,14 @@ export class ListView extends React.Component {
     const touchStart = e => {
       if (!e.touches[0]) return;
       e.stopPropagation();
+      e.preventDefault();
       this.oldTouchY = pointerY(e.touches[0]);
       return false;
     };
     const touchMove = e => {
       if (!e.touches[0]) return;
       e.stopPropagation();
+      e.preventDefault();
       let newY =  pointerY(e.touches[0]);
       this._scroll(this.oldTouchY - newY);
       this.oldTouchY = newY;
@@ -264,11 +266,14 @@ export class ListView extends React.Component {
       };
     };
     const mouseDownScrollView = e => {
+      e.stopPropagation();
+      e.preventDefault();
       const offY = pointerY(e) - getY(e.target);
       this.onScroll(offY/this.height);
     };
     const touchStartScrollView = e => {
       e.stopPropagation();
+      e.preventDefault();
       const offY = pointerY(e.touches[0]) - getY(e.target);
       this.onScroll(offY/this.height);
     }
