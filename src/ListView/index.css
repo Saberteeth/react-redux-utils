@@ -33,5 +33,6 @@
 
 .list-view-scroll-btn:hover{
   cursor: pointer;
+  background-color: rgba(160,160,160,.8);
 }
 
