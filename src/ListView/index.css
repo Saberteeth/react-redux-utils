@@ -8,14 +8,14 @@
 
 .list-view-scroll{
   float: right;
-  background: rgba(255,255,255,.4);
+  background: rgba(255,255,255,.2);
   width: 12px;
-  transition: all .4s;
+  transition: all .6s;
   border-radius:0 6px 6px 0;
 }
 
 .list-view-scroll:active{
-  background:rgba(0,200,255,.4);
+  background:rgba(0,200,255,.2);
 }
 .list-view-scroll:hover{
   cursor: pointer;
@@ -23,7 +23,7 @@
 
 .list-view-scroll-btn{
   position: relative;
-  background-color: rgba(160,160,160,.9);
+  background-color: rgba(160,160,160,.6);
   border-radius: 6px;
 }
 
