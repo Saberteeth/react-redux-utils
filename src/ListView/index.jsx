@@ -81,10 +81,13 @@ export class ListView extends React.Component {
         }
       }
       thas.endOFF = off > 0 ? 0 : off;
+      
       let scrollHeight = Math.floor(
         this.height * (this.endSize / this.handler.getSize())
       );
-      scrollHeight = scrollHeight < 30 ? 30 : scrollHeight;
+      
+      scrollHeight = scrollHeight < 30 ? 30 : scrollHeight ;
+      
       thas.onScroll(0);
       thas.setState(
         Object.assign({}, this.state, { scrollHeight: scrollHeight })
@@ -100,17 +103,20 @@ export class ListView extends React.Component {
     this.setState(Object.assign({}, this.state, { handler: handler }));
   }
 
+  get offEndIndex() {
+    return this.endOFF / this.handler.getItem(this.handler.getSize() - this.endSize).height;
+  }
+
   onScroll(percent, iScrollChange) {
     if (percent < 0 || percent > 1) return;
-
     if (!iScrollChange) {
       let maxTop = this.height - this.state.scrollHeight;
       this.state.scrollTop = percent * maxTop;
     }
-
     const max = this.handler.getSize() - this.endSize;
-    const now = Math.floor(percent * max);
-    this.state.scrollY = percent == 1 ? this.endOFF : 0;
+    const realNow = percent * (max - this.offEndIndex);
+    let now = Math.floor(realNow);
+    this.state.scrollY =  - (realNow - now) * this.handler.getItem(now).height ;
     this.state.begin = now;
     this.setState(Object.assign({}, this.state));
   }
@@ -130,7 +136,7 @@ export class ListView extends React.Component {
     let begin = this.state.begin;
     this.isEnd = false;
     let b = false;
-
+    
     for (let i = this.state.begin; i < this.handler.getSize(); i += 1) {
       const item = this.handler.getItem(i);
 
@@ -217,8 +223,12 @@ export class ListView extends React.Component {
 
     if (!this.isHideScroll) {
       let maxTop = this.height - this.state.scrollHeight;
+      const scale = 1 / (this.handler.getSize() - this.endSize);
       this.state.scrollTop =
-        this.state.begin / (this.handler.getSize() - this.endSize) * maxTop;
+        this.state.begin * scale * maxTop;
+      
+      //console.log(this.state.scrollY / this.maxHeight, this.state.begin / (this.handler.getSize() - this.endSize) )
+      //console.log(this.state.scrollTop,this.state.scrollY,this.maxHeight);
     }
     this.setState(Object.assign({}, this.state, { scrollY: offY }));
   }

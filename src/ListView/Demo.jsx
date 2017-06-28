@@ -14,7 +14,7 @@ viewSubject.subscribe({
 });
 
 const items = [];
-for (let i = 0; i < 5000; i += 1) {
+for (let i = 0; i < 10; i += 1) {
   items[i] = i;
 }
 
@@ -71,12 +71,12 @@ class Handler extends iHandler {
   }
   getItem(index) {
     let h = 100;
-    if (index != 0 && index % 3 == 0) {
-      h = 120;
-    }
-    if (index != 0 && index % 5 == 0) {
-      h = 160;
-    }
+    // if (index != 0 && index % 3 == 0) {
+    //   h = 120;
+    // }
+    // if (index != 0 && index % 5 == 0) {
+    //   h = 160;
+    // }
     return { height: h, data: items[index] };
   }
   getSize() {
@@ -86,7 +86,6 @@ class Handler extends iHandler {
 let height = 600;
 const handler = new Handler();
 const tools = {
-  onScroll: null,
   updataView: null
 };
 export default class Demo extends React.Component {
