@@ -20,6 +20,19 @@ export class iHandler {
   }
 }
 
+function getY(element){    
+  let parObj=element;    
+  let top=element.offsetTop;    
+  while(parObj = parObj.offsetParent){    
+      top+=parObj.offsetTop;    
+  }    
+  return top;    
+}
+
+function pointerY(event) { 
+  return event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop)); 
+}
+
 /**
  * This is ListView, must have attribute height and handler.
  * @prop height:number
@@ -72,6 +85,7 @@ export class ListView extends React.Component {
         this.height * (this.endSize / this.handler.getSize())
       );
       scrollHeight = scrollHeight < 30 ? 30 : scrollHeight;
+      thas.onScroll(0);
       thas.setState(
         Object.assign({}, this.state, { scrollHeight: scrollHeight })
       );
@@ -219,22 +233,21 @@ export class ListView extends React.Component {
     const touchStart = e => {
       if (!e.touches[0]) return;
       e.stopPropagation();
-      this.oldTouchY = e.touches[0].clientY;
+      this.oldTouchY = pointerY(e.touches[0]);
       return false;
     };
     const touchMove = e => {
       if (!e.touches[0]) return;
       e.stopPropagation();
-      let newY = e.touches[0].clientY;
+      let newY =  pointerY(e.touches[0]);
       this._scroll(this.oldTouchY - newY);
       this.oldTouchY = newY;
       return false;
     };
-
     const mouseDownScroll = e => {
       e.preventDefault();
       e.stopPropagation();
-      this.scrollOffY = e.clientY - this.state.scrollTop;
+      this.scrollOffY = pointerY(e) - this.state.scrollTop;
       window.onmouseup = e => {
         window.onmousemove = null;
         window.onmouseup = null;
@@ -242,7 +255,7 @@ export class ListView extends React.Component {
       window.onmousemove = e => {
         e.preventDefault();
         e.stopPropagation();
-        let top = e.clientY - this.scrollOffY;
+        let top = pointerY(e) - this.scrollOffY;
         top = top < 0 ? 0 : top;
         let maxTop = this.height - this.state.scrollHeight;
         top = top > maxTop ? maxTop : top;
@@ -250,29 +263,23 @@ export class ListView extends React.Component {
         this.onScroll(top / maxTop, !this.isHideScroll);
       };
     };
-    const touchDownScroll = e => {
-      e.stopPropagation();
-      this.scrollOffY = e.touches[0].clientY - this.state.scrollTop;
+    const mouseDownScrollView = e => {
+      const offY = pointerY(e) - getY(e.target);
+      this.onScroll(offY/this.height);
     };
-    const touchMoveScroll = e => {
+    const touchStartScrollView = e => {
       e.stopPropagation();
-      let top = e.touches[0].clientY - this.scrollOffY;
-      top = top < 0 ? 0 : top;
-      let maxTop = this.height - this.state.scrollHeight;
-      top = top > maxTop ? maxTop : top;
-      this.state.scrollTop = top;
-      this.onScroll(top / maxTop, !this.isHideScroll);
-    };
+      const offY = pointerY(e.touches[0]) - getY(e.target);
+      this.onScroll(offY/this.height);
+    }
 
     return (
       <div>
         {this.isHideScroll
           ? null
-          : <div   className="list-view-scroll" style={{ height: this.height }}>
+          : <div onTouchStart={touchStartScrollView.bind(this)} onMouseDown={mouseDownScrollView.bind(this)}   className="list-view-scroll" style={{ height: this.height }}>
               {this.state.scrollHeight != this.height
                 ? <div
-                    onTouchMove={touchMoveScroll}
-                    onTouchStart={touchDownScroll.bind(this)}
                     onMouseDown={mouseDownScroll.bind(this)}
                     className="list-view-scroll-btn"
                     style={{

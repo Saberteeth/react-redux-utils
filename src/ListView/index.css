@@ -10,9 +10,18 @@
   float: right;
   background: rgba(255,255,255,.5);
   width: 10px;
+  transition: all .4s;
+}
+
+.list-view-scroll:active{
+  background:rgba(0,200,255,.4);
+}
+.list-view-scroll:hover{
+  cursor: pointer;
 }
 
 .list-view-scroll-btn{
+  transition: all .13s;
   position: relative;
   background-color: rgba(160,160,160,.9);
   border-radius: 4px;
