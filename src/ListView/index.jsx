@@ -223,12 +223,9 @@ export class ListView extends React.Component {
 
     if (!this.isHideScroll) {
       let maxTop = this.height - this.state.scrollHeight;
-      const scale = 1 / (this.handler.getSize() - this.endSize);
+      const scale = 1 / (this.handler.getSize() - this.endSize - this.offEndIndex);
       this.state.scrollTop =
-        this.state.begin * scale * maxTop;
-      
-      //console.log(this.state.scrollY / this.maxHeight, this.state.begin / (this.handler.getSize() - this.endSize) )
-      //console.log(this.state.scrollTop,this.state.scrollY,this.maxHeight);
+        (this.state.begin - this.state.scrollY / this.maxHeight) * scale  * maxTop;
     }
     this.setState(Object.assign({}, this.state, { scrollY: offY }));
   }
