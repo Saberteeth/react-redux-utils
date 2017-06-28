@@ -14,7 +14,7 @@ viewSubject.subscribe({
 });
 
 const items = [];
-for (let i = 0; i < 10; i += 1) {
+for (let i = 0; i < 50; i += 1) {
   items[i] = i;
 }
 
